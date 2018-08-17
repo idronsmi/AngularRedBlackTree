@@ -1,5 +1,4 @@
-
 <svg:g [attr.transform]="'translate('+x+','+y+')'">
-  <rect class="node" style="filter:url(#shadow-6dp)" />
-  <text style="font-weight: bold" x="21" y="30">{{node.key}}</text>
+  <rect [ngClass]="{'red-node': node.color, 'black-node': !node.color}" class="node" style="filter:url(#shadow-6dp)" />
+  <text [ngClass]="{'red-node-text': node.color, 'black-node-text': !node.color}" style="font-weight: bold" x="21" y="30">{{node.key}}</text>
 </svg:g>

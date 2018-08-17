@@ -1,13 +1,16 @@
-<svg width="100%" height="100%">
+<svg wdith="500" height="100" viewBox="0 0 3000 1000">
   <defs>
     <filter id="shadow-6dp" x="-50%" y="-100%" width="200%" height="300%">
       <feOffset in="SourceAlpha" result="offA" dy="6" />
       <feOffset in="SourceAlpha" result="offB" dy="1" />
       <feOffset in="SourceAlpha" result="offC" dy="3" />
       <feMorphology in="offC" result="spreadC" operator="erode" radius="1" />
-      <feGaussianBlur in="offA" result="blurA" stdDeviation="5" /><!--10px 0-->
-      <feGaussianBlur in="offB" result="blurB" stdDeviation="9" /><!--18px 0-->
-      <feGaussianBlur in="spreadC" result="blurC" stdDeviation="2.5" /><!--5px -1px-->
+      <feGaussianBlur in="offA" result="blurA" stdDeviation="5" />
+      <!--10px 0-->
+      <feGaussianBlur in="offB" result="blurB" stdDeviation="9" />
+      <!--18px 0-->
+      <feGaussianBlur in="spreadC" result="blurC" stdDeviation="2.5" />
+      <!--5px -1px-->
       <feFlood flood-opacity="0.14" result="opA" />
       <feFlood flood-opacity="0.12" result="opB" />
       <feFlood flood-opacity="0.40" result="opC" />
@@ -23,6 +26,14 @@
     </filter>
   </defs>
 
-  
-  <svg app-node [x]="20" [y]="10" [node]="node"></svg>
+  <svg app-node *ngFor="let node of _preOrder(root);" [x]="node.xPosition" [y]="node.depth * 50" [node]="node.node"></svg>
+
 </svg>
+
+
+  <mat-form-field>
+    <mat-label>Type in a number:</mat-label>
+    <input type="number" [(ngModel)]="newNodeKey" matInput />
+  </mat-form-field>
+
+  <button (click)="insertNode()" color="primary" mat-raised-button>Insert Node</button>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Node } from './node';
+import { RBNode } from './node';
 
 @Component({
   selector: '[app-node]', // tslint:disable-line component-selector
@@ -8,7 +8,7 @@ import { Node } from './node';
   styleUrls: ['./node.component.scss']
 })
 export class NodeComponent implements OnInit {
-  @Input() node: Node;
+  @Input() node: RBNode;
   @Input() x: number;
   @Input() y: number;
   constructor() { }

@@ -1,5 +1,22 @@
 .node { 
   width: 50px;
   height: 50px;
-  fill: rgb(255, 255, 255);  
 }
+
+.black-node {
+  fill: rgb(0, 0, 0);  
+}
+
+.red-node {
+  fill: red;
+}
+
+.black-node-text {
+  fill: white;
+}
+
+.red-node-text {
+  fill: black;
+}
+
+

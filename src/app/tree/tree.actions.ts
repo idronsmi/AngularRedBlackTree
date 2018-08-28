@@ -3,7 +3,7 @@ import { RBNode } from './node';
 
 export enum TreeActionTypes {
   SetRoot = '[Tree] Set Root',
-  InsertNode = '[Tree] Insert Node',
+  InsertKey = '[Tree] Insert Key',
   DeleteNode = '[Tree] Delete Node'
 }
 
@@ -12,15 +12,15 @@ export class SetRoot implements Action {
   constructor(public payload: RBNode) {}
 }
 
-export class InsertNode implements Action {
-  readonly type = TreeActionTypes.InsertNode;
-  constructor(public payload: RBNode) {}
+export class InsertKey implements Action {
+  readonly type = TreeActionTypes.InsertKey;
+  constructor(public payload: number) {}
 }
 
-export class DeleteNode implements Action {
+export class DeleteNodeByKey implements Action {
   readonly type = TreeActionTypes.DeleteNode;
   constructor(public payload: number) {}
 }
 
 
-export type TreeActions = SetRoot | InsertNode | DeleteNode;
+export type TreeActions = SetRoot | InsertKey | DeleteNodeByKey;

@@ -1,30 +1,28 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { deepCopyRBNode, insert, RBNode } from './node';
+import { deepCopyRBTree, RBNode, RBTree } from './node';
 import { TreeActions, TreeActionTypes } from './tree.actions';
 
 export interface TreeState {
-  root: RBNode;
+  tree: RBTree;
 }
 
 export const initialState: TreeState = {
-  root: new RBNode(5)
+  tree: new RBTree()
 };
 
 export function reducer(state = initialState, action: TreeActions): TreeState {
   switch (action.type) {
 
     case TreeActionTypes.SetRoot: {
-      return { ...state, root: action.payload };
+      return { ...state, tree: new RBTree(action.payload) };
     }
 
-    case TreeActionTypes.InsertNode: {
-      let newRoot: RBNode = deepCopyRBNode(state.root, null);
-      console.log(newRoot, action.payload);
-      newRoot = insert(newRoot, action.payload);
-      console.log(newRoot);
-
-      return { ...state, root: newRoot};
+    case TreeActionTypes.InsertKey: {
+      const newTree = deepCopyRBTree(state.tree);
+      newTree.insertKey(action.payload);
+      console.log(newTree);
+      return { ...state, tree: newTree};
     }
 
     default: {
@@ -34,7 +32,7 @@ export function reducer(state = initialState, action: TreeActions): TreeState {
 }
 export const getTreeState = createFeatureSelector<TreeState>('tree');
 
-export const getRoot = createSelector(
+export const getTree = createSelector(
   getTreeState,
-  state => state.root
+  state => state.tree
 );

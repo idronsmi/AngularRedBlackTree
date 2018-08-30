@@ -11,6 +11,7 @@ export class NodeComponent implements OnInit {
   @Input() node: RBNode;
   @Input() x: number;
   @Input() y: number;
+
   constructor() { }
 
   ngOnInit() {

@@ -65,6 +65,7 @@ export class RBTree {
           insertedNode.parent.color = COLOR.BLACK;
           uncleNode.color = COLOR.BLACK;
           insertedNode.parent.parent.color = COLOR.RED;
+          insertedNode = insertedNode.parent.parent;
         } else {
           if (insertedNode === insertedNode.parent.rightChild) {
             insertedNode = insertedNode.parent;
@@ -80,6 +81,7 @@ export class RBTree {
           insertedNode.parent.color = COLOR.BLACK;
           auntNode.color = COLOR.BLACK;
           insertedNode.parent.parent.color = COLOR.RED;
+          insertedNode = insertedNode.parent.parent;
         } else {
           if (insertedNode === insertedNode.parent.leftChild) {
             insertedNode = insertedNode.parent;

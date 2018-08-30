@@ -8,6 +8,7 @@ import { NodeComponent } from './node';
 import { TreeRoutingModule } from './tree-routing.module';
 import { TreeComponent } from './tree.component';
 import { reducer } from './tree.reducer';
+import { LineComponent } from './line/line.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { reducer } from './tree.reducer';
     StoreModule.forFeature('tree', reducer)
   ],
   exports: [TreeComponent],
-  declarations: [TreeComponent, NodeComponent]
+  declarations: [TreeComponent, NodeComponent, LineComponent]
 })
 export class TreeModule { }

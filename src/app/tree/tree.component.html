@@ -26,14 +26,17 @@
     </filter>
   </defs>
 
-  <svg app-node *ngFor="let node of preOrder();" [x]="node.xPosition" [y]="node.depth * 51" [node]="node.node"></svg>
-
+  <svg app-node *ngFor="let node of nodes;" [x]="node.xPosition - 25" [y]="node.depth * 60" [node]="node.node"></svg>
+  <svg app-line *ngFor="let line of lines;" [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2" ></svg>
+ 
 </svg>
 
-
+<div>
   <mat-form-field>
     <mat-label>Type in a number:</mat-label>
     <input type="number" [(ngModel)]="newNodeKey" matInput />
   </mat-form-field>
 
   <button (click)="insertNode()" color="primary" mat-raised-button>Insert Node</button>
+</div>
+  

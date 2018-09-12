@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { RBTree } from './node';
-import { InsertKey } from './tree.actions';
-import { getTree, TreeState } from './tree.reducer';
-import { _MatTabLinkMixinBase } from '@angular/material/tabs/typings/tab-nav-bar';
+import { RBTree } from '../models';
+import { InsertKey } from '../tree.actions';
+import { getTree, TreeState } from '../tree.reducer';
 
 @Component({
   selector: 'app-tree',
@@ -50,7 +49,7 @@ export class TreeComponent implements OnInit {
   }
 
   private getLines() {
-    return Array.from(this._lines(this.tree.root,  this.maxWidth / 2));
+    return Array.from(this._lines(this.tree.root, this.maxWidth / 2));
   }
 
   public currentViewBox() {
@@ -62,34 +61,54 @@ export class TreeComponent implements OnInit {
     return widthFactor * this.nodeWidth;
   }
 
+  /** PreOrder generator */
   private *_preOrder(node, xPosition = 0, depth = 0) {
     yield { node: node, depth: depth, xPosition: xPosition };
+
     if (node.leftChild !== this.tree.LEAF) {
       yield* this._preOrder(node.leftChild, xPosition - this.calcXOffset(depth + 1), depth + 1);
     }
+
     if (node.rightChild !== this.tree.LEAF) {
       yield* this._preOrder(node.rightChild, xPosition + this.calcXOffset(depth + 1), depth + 1);
     }
   }
 
+  /** Generator for the x,y postioning for lines between nodes, given the root node */
   private *_lines(node, xPosition = 0, depth = 0, previousPosition = 0) {
+
+    // root doesn't need lines
+    // TODO: toggle leaf nodes
+
     if (depth !== 0) {
       if (xPosition < previousPosition) {
-        yield { x1: previousPosition - this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60};
+        yield { x1: previousPosition - this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60 };
       } else {
-        yield { x1: previousPosition + this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60};
+        yield { x1: previousPosition + this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60 };
       }
     }
+
     if (node.leftChild !== this.tree.LEAF) {
       yield* this._lines(node.leftChild, xPosition - this.calcXOffset(depth + 1), depth + 1, xPosition);
     }
+
     if (node.rightChild !== this.tree.LEAF) {
       yield* this._lines(node.rightChild, xPosition + this.calcXOffset(depth + 1), depth + 1, xPosition);
     }
   }
 
   private calcXOffset(currentDepth: number) {
-    console.log(this.maxHeight, currentDepth, Math.pow(2, this.maxHeight - (currentDepth + 1)));
+    // console.log(`node width: ${this.nodeWidth}, max height: ${this.maxHeight}, current depth: ${currentDepth}`);
+    // console.log(`number of nodes: ${Math.pow(2, this.maxHeight - (currentDepth + 1))}`);
+    // console.log((this.nodeWidth * Math.pow(2, this.maxHeight - (currentDepth + 1))));
     return (this.nodeWidth * Math.pow(2, this.maxHeight - (currentDepth + 1)));
+  }
+
+
+
+  // MODULE
+
+  public onScroll(scrollEvent) {
+    console.log(scrollEvent);
   }
 }

@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { deepCopyRBTree, RBNode, RBTree } from './node';
+import { deepCopyRBTree, RBTree } from './models';
 import { TreeActions, TreeActionTypes } from './tree.actions';
 
 export interface TreeState {
@@ -21,8 +21,12 @@ export function reducer(state = initialState, action: TreeActions): TreeState {
     case TreeActionTypes.InsertKey: {
       const newTree = deepCopyRBTree(state.tree);
       newTree.insertKey(action.payload);
-      console.log(newTree);
       return { ...state, tree: newTree};
+    }
+
+    case TreeActionTypes.DeleteNode: {
+      state.tree.deleteNode(action.payload);
+      return { ...state, tree: deepCopyRBTree(state.tree) };
     }
 
     default: {
@@ -30,6 +34,7 @@ export function reducer(state = initialState, action: TreeActions): TreeState {
     }
   }
 }
+
 export const getTreeState = createFeatureSelector<TreeState>('tree');
 
 export const getTree = createSelector(

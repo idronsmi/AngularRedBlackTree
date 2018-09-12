@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { RBNode } from './node';
+import { RBNode } from './models';
 
 export enum TreeActionTypes {
   SetRoot = '[Tree] Set Root',
@@ -17,10 +17,10 @@ export class InsertKey implements Action {
   constructor(public payload: number) {}
 }
 
-export class DeleteNodeByKey implements Action {
+export class DeleteNode implements Action {
   readonly type = TreeActionTypes.DeleteNode;
-  constructor(public payload: number) {}
+  constructor(public payload: RBNode) {}
 }
 
 
-export type TreeActions = SetRoot | InsertKey | DeleteNodeByKey;
+export type TreeActions = SetRoot | InsertKey | DeleteNode;

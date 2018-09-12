@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    children: []
+    redirectTo: '/tree',
+    pathMatch: 'full'
   }
 ];
 

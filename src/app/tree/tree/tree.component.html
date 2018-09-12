@@ -1,4 +1,4 @@
-<svg class="center" *ngIf="!emptyTree()" preserveAspectRatio="xMinYMin meet" width="1000" height="500" [attr.viewBox]="currentViewBox()">
+<svg svgPan class="svg-canvas">
   <defs>
     <filter id="shadow-6dp" x="-50%" y="-100%" width="200%" height="300%">
       <feOffset in="SourceAlpha" result="offA" dy="6" />
@@ -27,16 +27,16 @@
   </defs>
 
   <svg app-node *ngFor="let node of nodes;" [x]="node.xPosition - 25" [y]="node.depth * 60" [node]="node.node"></svg>
-  <svg app-line *ngFor="let line of lines;" [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2" ></svg>
- 
+  <svg app-line *ngFor="let line of lines;" [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2"></svg>
 </svg>
 
-<div>
-  <mat-form-field>
-    <mat-label>Type in a number:</mat-label>
-    <input type="number" [(ngModel)]="newNodeKey" matInput />
-  </mat-form-field>
+<div class="node-adder" (keyup.enter)="insertNode()">
+  <mat-card>
+    <mat-form-field>
+      <mat-label>Type in a number:</mat-label>
+      <input type="number" [(ngModel)]="newNodeKey" matInput />
+    </mat-form-field>
 
-  <button (click)="insertNode()" color="primary" mat-raised-button>Insert Node</button>
+    <button style="margin-left: 20px;"  [disabled]="!newNodeKey" (click)="insertNode()" color="accent" mat-raised-button>Insert Node</button>
+  </mat-card>
 </div>
-  

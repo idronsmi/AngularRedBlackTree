@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  background-color: mat-color(mat-palette($mat-deep-purple));
+}
+
+.spacer {
+  
+  padding: 0 20px;
+}

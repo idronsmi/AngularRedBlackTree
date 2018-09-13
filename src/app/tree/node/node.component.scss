@@ -1,10 +1,9 @@
 @import '~@angular/material/theming';
 
 .node { 
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height:100%;
   pointer-events: none;
-
 }
 
 .black-node {
@@ -15,17 +14,23 @@
   fill: mat-color(mat-palette($mat-red));
 }
 
+.text {
+  font-weight: bold
+}
+
 .black-node-text {
+  @extend .text;
   fill: white;
 }
 
 .red-node-text {
+  @extend .text;
   fill: black;
 }
 
 .box {
-  width: 10px;
-  height: 10px;
+  width: 20%;
+  height: 20%;
   fill:transparent;
   cursor: pointer;
 }

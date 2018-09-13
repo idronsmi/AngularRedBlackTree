@@ -1,6 +1,6 @@
 <svg:g [attr.transform]="'translate('+x+','+y+')'">
   <rect [ngClass]="{'red-node': node.color, 'black-node': !node.color}" class="node" style="filter:url(#shadow-6dp)" />
-  <text [ngClass]="{'red-node-text': node.color, 'black-node-text': !node.color}" style="font-weight: bold" x="21" y="30">{{node.key}}</text>
+  <text [ngClass]="{'red-node-text': node.color, 'black-node-text': !node.color}" alignment-baseline="middle" text-anchor="middle" x="50%" y="50%">{{node.key}}</text>
   <rect transform="translate(40,0)" class="box" (click)="deleteNode()" />
   <svg style="pointer-events:none;">
     <path class="close-x" d="M 42,8 L 48,2 M 42, 2 L 48,8" />

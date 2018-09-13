@@ -1,42 +1,58 @@
-<svg svgPan class="svg-canvas">
-  <defs>
-    <filter id="shadow-6dp" x="-50%" y="-100%" width="200%" height="300%">
-      <feOffset in="SourceAlpha" result="offA" dy="6" />
-      <feOffset in="SourceAlpha" result="offB" dy="1" />
-      <feOffset in="SourceAlpha" result="offC" dy="3" />
-      <feMorphology in="offC" result="spreadC" operator="erode" radius="1" />
-      <feGaussianBlur in="offA" result="blurA" stdDeviation="5" />
-      <!--10px 0-->
-      <feGaussianBlur in="offB" result="blurB" stdDeviation="9" />
-      <!--18px 0-->
-      <feGaussianBlur in="spreadC" result="blurC" stdDeviation="2.5" />
-      <!--5px -1px-->
-      <feFlood flood-opacity="0.14" result="opA" />
-      <feFlood flood-opacity="0.12" result="opB" />
-      <feFlood flood-opacity="0.40" result="opC" />
-      <feComposite in="opA" in2="blurA" result="shA" operator="in" />
-      <feComposite in="opB" in2="blurB" result="shB" operator="in" />
-      <feComposite in="opC" in2="blurC" result="shC" operator="in" />
-      <feMerge>
-        <feMergeNode in="shA" />
-        <feMergeNode in="shB" />
-        <feMergeNode in="shC" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-  </defs>
+<svg svgPanZoom [wrapper]='wrapper' class="svg-canvas">
+  <g #wrapper>
+    <defs>
+      <filter id="shadow-6dp" x="-50%" y="-100%" width="200%" height="300%">
+        <feOffset in="SourceAlpha" result="offA" dy="6" />
+        <feOffset in="SourceAlpha" result="offB" dy="1" />
+        <feOffset in="SourceAlpha" result="offC" dy="3" />
+        <feMorphology in="offC" result="spreadC" operator="erode" radius="1" />
+        <feGaussianBlur in="offA" result="blurA" stdDeviation="5" />
+        <!--10px 0-->
+        <feGaussianBlur in="offB" result="blurB" stdDeviation="9" />
+        <!--18px 0-->
+        <feGaussianBlur in="spreadC" result="blurC" stdDeviation="2.5" />
+        <!--5px -1px-->
+        <feFlood flood-opacity="0.14" result="opA" />
+        <feFlood flood-opacity="0.12" result="opB" />
+        <feFlood flood-opacity="0.40" result="opC" />
+        <feComposite in="opA" in2="blurA" result="shA" operator="in" />
+        <feComposite in="opB" in2="blurB" result="shB" operator="in" />
+        <feComposite in="opC" in2="blurC" result="shC" operator="in" />
+        <feMerge>
+          <feMergeNode in="shA" />
+          <feMergeNode in="shB" />
+          <feMergeNode in="shC" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
 
-  <svg app-node *ngFor="let node of nodes;" [x]="node.xPosition - 25" [y]="node.depth * 60" [node]="node.node"></svg>
-  <svg app-line *ngFor="let line of lines;" [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2"></svg>
+    <svg [attr.width]="nodeWidth" [attr.height]="nodeHeight" style="overflow: visible;" app-node *ngFor="let node of nodes;"
+      [x]="node.xPosition - (nodeWidth/2)" [y]="node.depth * getNodeHeightSpacer()" [node]="node.node"></svg>
+    <svg [attr.width]="nodeWidth" [attr.height]="nodeHeight" style="overflow: visible;" app-line *ngFor="let line of lines;"
+      [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2"></svg>
+  </g>
 </svg>
+
 
 <div class="node-adder" (keyup.enter)="insertNode()">
   <mat-card>
     <mat-form-field>
-      <mat-label>Type in a number:</mat-label>
-      <input type="number" [(ngModel)]="newNodeKey" matInput />
+      <mat-label>Type in a number</mat-label>
+      <input type="number" [(ngModel)]="newNodeKey" matInput autocomplete="off" />
     </mat-form-field>
 
-    <button style="margin-left: 20px;"  [disabled]="!newNodeKey" (click)="insertNode()" color="accent" mat-raised-button>Insert Node</button>
+    <button style="margin-left: 20px;" [disabled]="!newNodeKey" (click)="insertNode()" color="accent" mat-raised-button>Insert
+      Node</button>
+
+    <mat-form-field>
+      <mat-label>Node Height</mat-label>
+      <input type="number" [(ngModel)]="nodeHeight" matInput autocomplete="off" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Node Width</mat-label>
+      <input type="number" [(ngModel)]="nodeWidth" matInput autocomplete="off" />
+    </mat-form-field>
+
   </mat-card>
 </div>

@@ -18,7 +18,8 @@ export class TreeComponent implements OnInit {
   public maxHeight: number;
   public newNodeKey: number;
 
-  private nodeWidth = 50;
+  public nodeWidth = 50;
+  public nodeHeight = 50;
 
   constructor(private store: Store<TreeState>) { }
 
@@ -53,7 +54,7 @@ export class TreeComponent implements OnInit {
   }
 
   public currentViewBox() {
-    return [0, 0, this.maxWidth, this.maxHeight * 60];
+    return [0, 0, this.maxWidth, this.maxHeight * this.getNodeHeightSpacer()];
   }
 
   private calcMaxWidth(height: number) {
@@ -82,9 +83,19 @@ export class TreeComponent implements OnInit {
 
     if (depth !== 0) {
       if (xPosition < previousPosition) {
-        yield { x1: previousPosition - this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60 };
+        yield {
+          x1: previousPosition - (this.nodeWidth / 2),
+          y1: ((depth - 1) * this.getNodeHeightSpacer()) + (this.nodeHeight / 2),
+          x2: xPosition,
+          y2: depth *  this.getNodeHeightSpacer()
+        };
       } else {
-        yield { x1: previousPosition + this.nodeWidth / 2, y1: ((depth - 1) * 60) + 25, x2: xPosition, y2: depth * 60 };
+        yield {
+          x1: previousPosition + (this.nodeWidth / 2),
+          y1: ((depth - 1) * this.getNodeHeightSpacer()) + (this.nodeHeight / 2),
+          x2: xPosition,
+          y2: depth * this.getNodeHeightSpacer()
+        };
       }
     }
 
@@ -104,11 +115,8 @@ export class TreeComponent implements OnInit {
     return (this.nodeWidth * Math.pow(2, this.maxHeight - (currentDepth + 1)));
   }
 
-
-
-  // MODULE
-
-  public onScroll(scrollEvent) {
-    console.log(scrollEvent);
+  private getNodeHeightSpacer() {
+    return 1.2 * this.nodeHeight;
   }
+
 }

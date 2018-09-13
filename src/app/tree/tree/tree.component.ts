@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { RBTree } from '../models';
 import { InsertKey } from '../tree.actions';
 import { getTree, TreeState } from '../tree.reducer';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-tree',
@@ -25,7 +26,6 @@ export class TreeComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(getTree).subscribe(tree => {
-      console.log(tree);
       this.tree = tree;
       this.maxHeight = this.tree.height;
       this.maxWidth = this.calcMaxWidth(this.tree.height);
@@ -37,6 +37,9 @@ export class TreeComponent implements OnInit {
   }
 
   public insertNode() {
+    if (!this.newNodeKey || !isNumber(this.newNodeKey)) {
+      return;
+    }
     this.store.dispatch(new InsertKey(this.newNodeKey));
     this.newNodeKey = null;
   }
@@ -77,10 +80,9 @@ export class TreeComponent implements OnInit {
 
   /** Generator for the x,y postioning for lines between nodes, given the root node */
   private *_lines(node, xPosition = 0, depth = 0, previousPosition = 0) {
-
-    // root doesn't need lines
     // TODO: toggle leaf nodes
 
+    // root doesn't need lines
     if (depth !== 0) {
       if (xPosition < previousPosition) {
         yield {
@@ -109,9 +111,6 @@ export class TreeComponent implements OnInit {
   }
 
   private calcXOffset(currentDepth: number) {
-    // console.log(`node width: ${this.nodeWidth}, max height: ${this.maxHeight}, current depth: ${currentDepth}`);
-    // console.log(`number of nodes: ${Math.pow(2, this.maxHeight - (currentDepth + 1))}`);
-    // console.log((this.nodeWidth * Math.pow(2, this.maxHeight - (currentDepth + 1))));
     return (this.nodeWidth * Math.pow(2, this.maxHeight - (currentDepth + 1)));
   }
 

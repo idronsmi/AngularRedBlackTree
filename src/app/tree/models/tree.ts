@@ -19,9 +19,6 @@ export class RBTree {
     let node2Ptr: RBNode;
     let originalColor = nodePtr.color;
 
-    console.log('deleteNode');
-    console.log(nodeToDelete);
-
     if (nodeToDelete.leftChild === this.LEAF) {
       node2Ptr = nodeToDelete.rightChild;
       this.transplant(nodeToDelete, nodeToDelete.rightChild);
@@ -50,9 +47,7 @@ export class RBTree {
     if (originalColor === COLOR.BLACK) {
       this.deleteRebalanceTree(node2Ptr);
     }
-    console.log('wtf');
     this.height = this.maxDepth();
-    console.log(this.height);
   }
 
   private deleteRebalanceTree(node: RBNode) {

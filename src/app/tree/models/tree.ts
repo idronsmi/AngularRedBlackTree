@@ -56,24 +56,26 @@ export class RBTree {
         let nodePtr = node.parent.rightChild;
 
         if (nodePtr.color === COLOR.RED) {
+          // case 1
           nodePtr.color = COLOR.BLACK;
           node.parent.color = COLOR.RED;
           this.rotateLeft(node.parent);
           nodePtr = node.parent.rightChild;
         }
 
-        if (nodePtr.leftChild.color === COLOR.BLACK) {
+        if (nodePtr.leftChild.color === COLOR.BLACK && nodePtr.rightChild.color === COLOR.BLACK) {
+          // case 2
           nodePtr.color = COLOR.RED;
           node = node.parent;
         } else {
-
           if (nodePtr.rightChild.color === COLOR.BLACK) {
+            // case 3
             nodePtr.leftChild.color = COLOR.BLACK;
             nodePtr.color = COLOR.RED;
             this.rotateRight(nodePtr);
             nodePtr = node.parent.rightChild;
           }
-
+          // case 4
           nodePtr.color = node.parent.color;
           node.parent.color = COLOR.BLACK;
           nodePtr.rightChild.color = COLOR.BLACK;
@@ -84,24 +86,26 @@ export class RBTree {
         let nodePtr = node.parent.leftChild;
 
         if (nodePtr.color === COLOR.RED) {
+          // case 1
           nodePtr.color = COLOR.BLACK;
           node.parent.color = COLOR.RED;
           this.rotateRight(node.parent);
           nodePtr = node.parent.leftChild;
         }
 
-        if (nodePtr.rightChild.color === COLOR.BLACK) {
+        if (nodePtr.leftChild.color === COLOR.BLACK && nodePtr.rightChild.color === COLOR.BLACK) {
+          // case 2
           nodePtr.color = COLOR.RED;
           node = node.parent;
         } else {
-
           if (nodePtr.leftChild.color === COLOR.BLACK) {
+            // case 3
             nodePtr.rightChild.color = COLOR.BLACK;
             nodePtr.color = COLOR.RED;
             this.rotateLeft(nodePtr);
             nodePtr = node.parent.leftChild;
           }
-
+          // case 4
           nodePtr.color = node.parent.color;
           node.parent.color = COLOR.BLACK;
           nodePtr.leftChild.color = COLOR.BLACK;
@@ -181,8 +185,8 @@ export class RBTree {
           this.rotateLeft(insertedNode.parent.parent);
         }
       }
-      this.root.color = COLOR.BLACK;
     }
+    this.root.color = COLOR.BLACK;
   }
 
   private rotateLeft(nodeToRotate: RBNode) {
@@ -272,7 +276,7 @@ export class RBTree {
     }
     return nodeToIterate;
   }
-  
+
   private treeMax(nodeToIterate: RBNode) {
     while (nodeToIterate.rightChild !== this.LEAF) {
       nodeToIterate = nodeToIterate.rightChild;

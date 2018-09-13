@@ -26,12 +26,16 @@ export class TreeComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(getTree).subscribe(tree => {
+      console.log(tree);
       this.tree = tree;
       this.maxHeight = this.tree.height;
       this.maxWidth = this.calcMaxWidth(this.tree.height);
       if (this.tree.root !== this.tree.LEAF) {
         this.nodes = this.getNodes();
         this.lines = this.getLines();
+      } else {
+        this.nodes = null;
+        this.lines = null;
       }
     });
   }

@@ -28,7 +28,8 @@
     </defs>
 
     <svg [attr.width]="nodeWidth" [attr.height]="nodeHeight" style="overflow: visible;" app-node *ngFor="let node of nodes;"
-      [x]="node.xPosition - (nodeWidth/2)" [y]="node.depth * getNodeHeightSpacer()" [node]="node.node"></svg>
+         [x]="node.xPosition - (nodeWidth/2)" [y]="node.depth * getNodeHeightSpacer()" [nodeWidth]="nodeWidth" [nodeHeight]="nodeHeight"
+         [node]="node.node"></svg>
     <svg [attr.width]="nodeWidth" [attr.height]="nodeHeight" style="overflow: visible;" app-line *ngFor="let line of lines;"
       [x1]="line.x1" [y1]="line.y1" [x2]="line.x2" [y2]="line.y2"></svg>
   </g>
